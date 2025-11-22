@@ -6,7 +6,18 @@ from .models import Contact
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ['name', 'address', 'profession', 'tel_number', 'email']
+        fields = [
+            "name",
+            "education",
+            "speciality",
+            "experience",
+            "address",
+            "city",
+            "rating",
+            "phone",
+            "email",
+        ]
+
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=False)

@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import CreateView
@@ -9,6 +8,7 @@ from django.db.models import Q
 from .models import Contact
 from .forms import ContactForm, SignUpForm
 
+
 # --- SIGNUP ---
 class SignUpView(CreateView):
     form_class = SignUpForm
@@ -17,25 +17,27 @@ class SignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        # auto-login after successful signup
         login(self.request, user)
         return redirect(self.success_url)
+
 
 # --- CRUD ---
 @login_required
 def contact_list(request):
-    """List + simple search across multiple fields."""
     q = request.GET.get('q', '').strip()
     contacts = Contact.objects.all()
     if q:
         contacts = contacts.filter(
             Q(name__icontains=q) |
+            Q(speciality__icontains=q) |
+            Q(city__icontains=q) |
             Q(address__icontains=q) |
-            Q(profession__icontains=q) |
-            Q(tel_number__icontains=q) |
+            Q(education__icontains=q) |
+            Q(phone__icontains=q) |
             Q(email__icontains=q)
         ).distinct()
     return render(request, 'contacts/list.html', {'contacts': contacts, 'q': q})
+
 
 @login_required
 def contact_create(request):
@@ -46,7 +48,8 @@ def contact_create(request):
             return redirect('contact_list')
     else:
         form = ContactForm()
-    return render(request, 'contacts/form.html', {'form': form, 'title': 'Add Contact'})
+    return render(request, 'contacts/form.html', {'form': form, 'title': 'Add Doctor'})
+
 
 @login_required
 def contact_update(request, pk):
@@ -58,7 +61,8 @@ def contact_update(request, pk):
             return redirect('contact_list')
     else:
         form = ContactForm(instance=contact)
-    return render(request, 'contacts/form.html', {'form': form, 'title': 'Edit Contact'})
+    return render(request, 'contacts/form.html', {'form': form, 'title': 'Edit Doctor'})
+
 
 @login_required
 def contact_delete(request, pk):
@@ -69,4 +73,27 @@ def contact_delete(request, pk):
     return render(request, 'contacts/confirm_delete.html', {'contact': contact})
 
 
-# Create your views here.
+# --- RECOMMENDATION ENGINE ---
+@login_required
+def recommend_contacts(request):
+    city = request.GET.get('city', '').strip()
+    speciality = request.GET.get('speciality', '').strip()
+
+    qs = Contact.objects.all()
+
+    if city:
+        qs = qs.filter(city__icontains=city)
+
+    if speciality:
+        qs = qs.filter(speciality__icontains=speciality)
+
+    # Recommendation ordering: by rating then experience
+    qs = qs.order_by('-rating', '-experience')
+
+    context = {
+        'contacts': qs,
+        'city': city,
+        'speciality': speciality,
+    }
+    return render(request, 'contacts/recommend.html', context)
+

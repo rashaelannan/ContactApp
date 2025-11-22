@@ -6,5 +6,5 @@ urlpatterns = [
     path('contacts/new/', views.contact_create, name='contact_create'),
     path('contacts/<int:pk>/edit/', views.contact_update, name='contact_update'),
     path('contacts/<int:pk>/delete/', views.contact_delete, name='contact_delete'),
+    path('recommend/', views.recommend_contacts, name='recommend_contacts'),
 ]
-

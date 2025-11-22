@@ -1,12 +1,14 @@
-{% extends "base.html" %}
-{% block title %}Delete Contact{% endblock %}
-{% block content %}
-  <h1>Delete Contact</h1>
-  <p>Are you sure you want to delete <strong>{{ contact.name }}</strong>?</p>
-  <form method="post">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Doctor</title>
+</head>
+<body>
+<h1>Delete {{ contact.name }}?</h1>
+<form method="post">
     {% csrf_token %}
     <button type="submit">Yes, delete</button>
-    <a href="{% url 'contact_list' %}">Cancel</a>
-  </form>
-{% endblock %}
-
+</form>
+<p><a href="{% url 'contact_list' %}">Cancel</a></p>
+</body>
+</html>
