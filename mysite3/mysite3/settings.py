@@ -27,10 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
-    "doctor-finder.azurewebsites.net"]
+    "doctor-finder.azurewebsites.net",
+    "doctor-finder-ebg2e6a8exg2c6ft.francecentral-01.azurewebsites.net",
+    ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://doctor-finder.azurewebsites.net",
+    "https://doctor-finder-ebg2e6a8exg2c6ft.francecentral-01.azurewebsites.net",
 ]
 # Application definition
 
