@@ -24,7 +24,6 @@
             aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
@@ -36,11 +35,16 @@
           </a>
         </li>
       </ul>
-
-      <!-- Right side of navbar (empty for now, since no login/logout) -->
-      <span class="navbar-text">
-        <!-- You can put any static text here if you want -->
-      </span>
+      {% if user.is_authenticated %}
+        <span class="navbar-text me-3">
+          Logged in as {{ user.username }}
+        </span>
+        <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}">
+          Logout
+        </a>
+      {% else %}
+        <a class="btn btn-light btn-sm" href="{% url 'login' %}">Login</a>
+      {% endif %}
     </div>
   </div>
 </nav>
