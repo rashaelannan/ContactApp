@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+#from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import CreateView
@@ -22,7 +22,7 @@ class SignUpView(CreateView):
 
 
 # --- CRUD ---
-@login_required
+#@login_required
 def contact_list(request):
     q = request.GET.get('q', '').strip()
     contacts = Contact.objects.all()
@@ -39,7 +39,7 @@ def contact_list(request):
     return render(request, 'contacts/list.html', {'contacts': contacts, 'q': q})
 
 
-@login_required
+#@login_required
 def contact_create(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -51,7 +51,7 @@ def contact_create(request):
     return render(request, 'contacts/form.html', {'form': form, 'title': 'Add Doctor'})
 
 
-@login_required
+#@login_required
 def contact_update(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
@@ -64,7 +64,7 @@ def contact_update(request, pk):
     return render(request, 'contacts/form.html', {'form': form, 'title': 'Edit Doctor'})
 
 
-@login_required
+#@login_required
 def contact_delete(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
@@ -74,7 +74,7 @@ def contact_delete(request, pk):
 
 
 # --- RECOMMENDATION ENGINE ---
-@login_required
+#@login_required
 def recommend_contacts(request):
     city = request.GET.get('city', '').strip()
     speciality = request.GET.get('speciality', '').strip()

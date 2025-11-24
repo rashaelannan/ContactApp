@@ -12,11 +12,11 @@ urlpatterns = [
     path('', include('myapp3.urls')),
 
     # Auth: login/logout using Django’s built-in views (no superuser needed)
-    path('login/',  auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='registration/logged_out.html'), name='logout'),
+    #path('login/',  auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    #path('logout/', auth_views.LogoutView.as_view(template_name='registration/logged_out.html'), name='logout'),
 
     # Signup (custom view)
-    path('signup/', SignUpView.as_view(), name='signup'),
+    #path('signup/', SignUpView.as_view(), name='signup'),
 ]
 
 
