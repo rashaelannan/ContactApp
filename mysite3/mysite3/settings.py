@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
     "doctor-finder.azurewebsites.net",
     "doctor-finder-ebg2e6a8exg2c6ft.francecentral-01.azurewebsites.net",
     "169.254.131.3", 
+    "localhost",
     ]
 
 CSRF_TRUSTED_ORIGINS = [
