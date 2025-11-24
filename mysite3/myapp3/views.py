@@ -74,12 +74,10 @@ def contact_delete(request, pk):
     return render(request, 'contacts/confirm_delete.html', {'contact': contact})
 
 
-# --- RECOMMENDATION ENGINE ---
 @login_required
 def recommend_contacts(request):
     city = request.GET.get('city', '').strip()
     speciality = request.GET.get('speciality', '').strip()
-    max_fee = request.GET.get('max_fee', '').strip()
 
     qs = Contact.objects.all()
 
@@ -87,25 +85,14 @@ def recommend_contacts(request):
         qs = qs.filter(city__icontains=city)
 
     if speciality:
-        qs = qs.filter(
-            Q(speciality__icontains=speciality) |
-            Q(hospital__icontains=speciality)
-        )
+        qs = qs.filter(speciality__icontains=speciality)
 
-    if max_fee:
-        try:
-            max_fee_int = int(max_fee)
-            qs = qs.filter(fees__lte=max_fee_int)
-        except ValueError:
-            pass
-
-    # recommended order: highest rating first, then cheaper
-    qs = qs.order_by('-rating', 'fees')
+    # Optional: sort “best” doctors first
+    qs = qs.order_by('-rating', '-experience')
 
     context = {
         'contacts': qs,
         'city': city,
         'speciality': speciality,
-        'max_fee': max_fee,
     }
     return render(request, 'contacts/recommend.html', context)
