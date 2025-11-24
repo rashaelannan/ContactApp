@@ -25,16 +25,15 @@ class SignUpView(CreateView):
 # --- CRUD ---
 @login_required
 def contact_list(request):
-    """List + simple search across multiple fields."""
     q = request.GET.get('q', '').strip()
     contacts = Contact.objects.all()
     if q:
         contacts = contacts.filter(
             Q(name__icontains=q) |
+            Q(speciality__icontains=q) |
             Q(city__icontains=q) |
             Q(address__icontains=q) |
-            Q(hospital__icontains=q) |
-            Q(speciality__icontains=q) |
+            Q(education__icontains=q) |
             Q(phone__icontains=q) |
             Q(email__icontains=q)
         ).distinct()
