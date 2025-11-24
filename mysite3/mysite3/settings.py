@@ -25,7 +25,9 @@ SECRET_KEY = "django-insecure-3+tv7=pp4r9oa4-fz5k+w6-^!=6!z%pe(=@k#4+%wqblkr#p^*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["doctor-finder.azurewebsites.net"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "doctor-finder.azurewebsites.net"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://doctor-finder.azurewebsites.net",
@@ -127,3 +129,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = 'contact_list'
 LOGOUT_REDIRECT_URL = 'login'  # after logout, go to login
+LOGIN_URL = "login"
+
+
