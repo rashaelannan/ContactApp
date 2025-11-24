@@ -39,11 +39,19 @@
         <span class="navbar-text me-3">
           Logged in as {{ user.username }}
         </span>
-        <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}">
+        <a class="btn btn-outline-light btn-sm"
+          href="{% url 'logout' %}?next={% url 'login' %}">
           Logout
         </a>
       {% else %}
-        <a class="btn btn-light btn-sm" href="{% url 'login' %}">Login</a>
+        <a class="btn btn-outline-light btn-sm me-2"
+          href="{% url 'login' %}">
+          Login
+        </a>
+        <a class="btn btn-light btn-sm"
+          href="{% url 'signup' %}">
+          Sign up
+        </a>
       {% endif %}
     </div>
   </div>
